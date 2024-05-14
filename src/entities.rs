@@ -3,11 +3,11 @@ pub enum LocalEntity {
     Paddle,
 }
 
-impl<'a> Into<&'a str> for LocalEntity {
-    fn into(self) -> &'a str {
-        match self {
-            Self::Ball => "Ball",
-            Self::Paddle => "Paddle",
+impl<'a> From<LocalEntity> for &'a str {
+    fn from(value: LocalEntity) -> Self {
+        match value {
+            LocalEntity::Ball => "Ball",
+            LocalEntity::Paddle => "Paddle",
         }
     }
 }
@@ -16,10 +16,10 @@ pub enum LocalTile {
     Wall,
 }
 
-impl Into<i32> for LocalTile {
-    fn into(self) -> i32 {
-        match self {
-            Self::Wall => 1,
+impl From<LocalTile> for i32 {
+    fn from(value: LocalTile) -> Self {
+        match value {
+            LocalTile::Wall => 1,
         }
     }
 }
