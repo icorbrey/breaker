@@ -23,7 +23,8 @@ cargo run
 ### Tools
 
 - [Aseprite](https://www.aseprite.org/): Animated sprite editor and pixel art tool.
-- [LDtk](https://ldtk.io): A powerful 2D level editor. 
+- [LDtk](https://ldtk.io): A powerful 2D level editor.
+  - [bevy_ecs_ldtk](https://github.com/Trouv/bevy_ecs_ldtk): An ECS friendly LDtk plugin for Bevy.
 
 ## License
 
