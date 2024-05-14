@@ -1,13 +1,19 @@
+mod ball;
+mod paddle;
 mod prelude;
+mod wall;
 
-use crate::prelude::*;
+use crate::prelude::{plugins::*, *};
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugins(RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0))
-        .add_plugins(RapierDebugRenderPlugin::default())
-        .add_plugins(EditorPlugin::default())
+        .add_plugins((
+            RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
+            RapierDebugRenderPlugin::default(),
+            EditorPlugin::default(),
+        ))
+        .add_plugins((BallPlugin, WallPlugin, PaddlePlugin))
         .add_systems(Startup, setup)
         .run();
 }

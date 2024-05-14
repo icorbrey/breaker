@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "0.13.2", features = ["dynamic_linking"] }
+bevy_ecs_ldtk = "0.9.0"
 bevy_editor_pls = "0.8.1"
 bevy_rapier2d = "0.26.0"
 leafwing-input-manager = "0.13.3"
