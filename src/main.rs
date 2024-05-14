@@ -1,5 +1,5 @@
 mod ball;
-mod entities;
+mod brick;
 mod paddle;
 mod prelude;
 mod wall;
@@ -15,7 +15,7 @@ fn main() {
             EditorPlugin::default(),
             LdtkPlugin,
         ))
-        .add_plugins((BallPlugin, WallPlugin, PaddlePlugin))
+        .add_plugins((BallPlugin, BrickPlugin, PaddlePlugin, WallPlugin))
         .add_systems(Startup, setup)
         .run();
 }
