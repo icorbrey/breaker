@@ -7,9 +7,10 @@ impl Plugin for BallPlugin {
     }
 }
 
-ldtk_entity!(Ball);
+#[derive(Component, Debug, Default)]
+pub struct Ball;
 
-impl EntityBlueprint<BlueprintBundle> for Ball {
+impl EntityBlueprint for Ball {
     const NAME: &'static str = "Ball";
 
     fn components() -> impl Bundle {

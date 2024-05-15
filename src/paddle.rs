@@ -7,8 +7,10 @@ impl Plugin for PaddlePlugin {
     }
 }
 
-ldtk_entity!(Paddle);
-impl EntityBlueprint<BlueprintBundle> for Paddle {
+#[derive(Component, Debug, Default)]
+pub struct Paddle;
+
+impl EntityBlueprint for Paddle {
     const NAME: &'static str = "Paddle";
 
     fn components() -> impl Bundle {

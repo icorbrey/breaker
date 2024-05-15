@@ -7,8 +7,10 @@ impl Plugin for BrickPlugin {
     }
 }
 
-ldtk_entity!(Brick);
-impl EntityBlueprint<BlueprintBundle> for Brick {
+#[derive(Component, Debug, Default)]
+pub struct Brick;
+
+impl EntityBlueprint for Brick {
     const NAME: &'static str = "Brick";
 
     fn components() -> impl Bundle {

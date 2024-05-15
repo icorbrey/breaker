@@ -7,8 +7,10 @@ impl Plugin for WallPlugin {
     }
 }
 
-ldtk_tile!(Wall);
-impl TileBlueprint<BlueprintBundle> for Wall {
+#[derive(Component, Debug, Default)]
+pub struct Wall;
+
+impl TileBlueprint for Wall {
     const NAME: &'static str = "Wall";
     const ID: i32 = 1;
 

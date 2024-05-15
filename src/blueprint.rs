@@ -1,89 +1,38 @@
 use crate::prelude::*;
 
-#[macro_export]
-macro_rules! ldtk_entity {
-    ($name:ident) => {
-        #[derive(Component, Debug, Default)]
-        pub struct $name;
-
-        #[derive(Bundle, Default, LdtkEntity)]
-        struct BlueprintBundle {
-            marker: $name,
-            #[sprite_sheet_bundle]
-            sprite_sheet_bundle: SpriteSheetBundle,
-        }
-    };
-}
-
-#[macro_export]
-macro_rules! ldtk_tile {
-    ($name:ident) => {
-        #[derive(Component, Debug, Default)]
-        pub struct $name;
-
-        #[derive(Bundle, Default, LdtkIntCell)]
-        struct BlueprintBundle {
-            marker: $name,
-        }
-    };
-}
-
 pub trait BlueprintAppExt {
-    fn register_entity_blueprint<C: Component + EntityBlueprint<impl LdtkEntity + Bundle>>(
-        &mut self,
-    ) -> &mut Self;
-
-    fn register_entity_blueprint_wrapper<C, B>(&mut self) -> &mut Self
+    fn register_entity_blueprint<C>(&mut self) -> &mut Self
     where
-        C: Component + EntityBlueprint<B>,
-        B: LdtkEntity + Bundle;
+        C: Component + Default + EntityBlueprint,
+        EntityBlueprintBundle<C>: LdtkEntity + Bundle;
 
-    fn register_tile_blueprint<C: Component + TileBlueprint<impl LdtkIntCell + Bundle>>(
-        &mut self,
-    ) -> &mut Self;
-
-    fn register_tile_blueprint_wrapper<C, B>(&mut self) -> &mut Self
+    fn register_tile_blueprint<C>(&mut self) -> &mut Self
     where
-        C: Component + TileBlueprint<B>,
-        B: LdtkIntCell + Bundle;
+        C: Component + Default + TileBlueprint,
+        TileBlueprintBundle<C>: LdtkIntCell + Bundle;
 }
 
 impl BlueprintAppExt for App {
-    fn register_entity_blueprint<C: Component + EntityBlueprint<impl LdtkEntity + Bundle>>(
-        &mut self,
-    ) -> &mut Self {
-        self.register_entity_blueprint_wrapper::<C, _>()
-    }
-
-    fn register_entity_blueprint_wrapper<C, B>(&mut self) -> &mut Self
+    fn register_entity_blueprint<C>(&mut self) -> &mut Self
     where
-        C: Component + EntityBlueprint<B>,
-        B: LdtkEntity + Bundle,
+        C: Component + Default + EntityBlueprint,
+        EntityBlueprintBundle<C>: LdtkEntity + Bundle,
     {
-        self.register_ldtk_entity::<B>(C::NAME)
+        self.register_ldtk_entity::<EntityBlueprintBundle<C>>(C::NAME)
             .add_systems(Update, C::hydrate)
     }
 
-    fn register_tile_blueprint<C: Component + TileBlueprint<impl LdtkIntCell + Bundle>>(
-        &mut self,
-    ) -> &mut Self {
-        self.register_tile_blueprint_wrapper::<C, _>()
-    }
-
-    fn register_tile_blueprint_wrapper<C, B>(&mut self) -> &mut Self
+    fn register_tile_blueprint<C>(&mut self) -> &mut Self
     where
-        C: Component + TileBlueprint<B>,
-        B: LdtkIntCell + Bundle,
+        C: Component + Default + TileBlueprint,
+        TileBlueprintBundle<C>: LdtkIntCell + Bundle,
     {
-        self.register_ldtk_int_cell::<B>(C::ID)
+        self.register_ldtk_int_cell::<TileBlueprintBundle<C>>(C::ID)
             .add_systems(Update, C::hydrate)
     }
 }
 
-pub trait EntityBlueprint<B>
-where
-    B: LdtkEntity + Bundle,
-{
+pub trait EntityBlueprint {
     const NAME: &'static str;
 
     fn hydrate(mut commands: Commands, new_entities: Query<Entity, Added<Self>>)
@@ -101,10 +50,17 @@ where
     fn components() -> impl Bundle;
 }
 
-pub trait TileBlueprint<B>
+#[derive(Bundle, Default, LdtkEntity)]
+pub struct EntityBlueprintBundle<C>
 where
-    B: LdtkIntCell + Bundle,
+    C: Component + Default,
 {
+    component: C,
+    #[sprite_sheet_bundle]
+    sprite_sheet_bundle: SpriteSheetBundle,
+}
+
+pub trait TileBlueprint {
     const NAME: &'static str;
     const ID: i32;
 
@@ -121,4 +77,12 @@ where
     }
 
     fn components() -> impl Bundle;
+}
+
+#[derive(Bundle, Default, LdtkIntCell)]
+pub struct TileBlueprintBundle<C>
+where
+    C: Component + Default,
+{
+    component: C,
 }
