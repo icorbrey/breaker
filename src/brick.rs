@@ -3,20 +3,15 @@ use crate::prelude::*;
 pub struct BrickPlugin;
 impl Plugin for BrickPlugin {
     fn build(&self, app: &mut App) {
-        app.register_ldtk_entity::<BrickBundle>(Brick::ID);
+        app.register_entity_blueprint::<Brick>();
     }
 }
 
-#[derive(Component, Debug, Default)]
-pub struct Brick;
+ldtk_entity!(Brick);
+impl EntityBlueprint<BlueprintBundle> for Brick {
+    const NAME: &'static str = "Brick";
 
-impl Brick {
-    pub const ID: &'static str = "Brick";
-}
-
-#[derive(Bundle, Default, LdtkEntity)]
-pub struct BrickBundle {
-    brick: Brick,
-    #[sprite_sheet_bundle]
-    sprite_sheet_bundle: SpriteSheetBundle,
+    fn components() -> impl Bundle {
+        Collider::cuboid(24.0, 8.0)
+    }
 }

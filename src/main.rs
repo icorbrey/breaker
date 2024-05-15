@@ -1,4 +1,5 @@
 mod ball;
+mod blueprint;
 mod brick;
 mod paddle;
 mod prelude;
