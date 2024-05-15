@@ -16,24 +16,20 @@ fn main() {
             LdtkPlugin,
         ))
         .add_plugins((BallPlugin, BrickPlugin, PaddlePlugin, WallPlugin))
+        .insert_resource(LevelSelection::index(0))
         .add_systems(Startup, setup)
         .run();
 }
 
-fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+    let mut camera = Camera2dBundle::default();
+    camera.projection.scale = 0.5;
+    camera.transform.translation.x += 1280.0 / 4.0;
+    camera.transform.translation.y += 720.0 / 4.0;
+    commands.spawn(camera);
 
-    commands.spawn((
-        Name::new("Platform"),
-        Collider::cuboid(500.0, 50.0),
-        TransformBundle::from(Transform::from_xyz(0.0, -100.0, 0.0)),
-    ));
-
-    commands.spawn((
-        Name::new("Ball"),
-        RigidBody::Dynamic,
-        Collider::ball(50.0),
-        Restitution::coefficient(0.7),
-        TransformBundle::from(Transform::from_xyz(0.0, 400.0, 0.0)),
-    ));
+    commands.spawn(LdtkWorldBundle {
+        ldtk_handle: asset_server.load("level.ldtk"),
+        ..default()
+    });
 }

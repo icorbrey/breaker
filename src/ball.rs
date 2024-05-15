@@ -14,9 +14,22 @@ impl Ball {
     const ID: &'static str = "Ball";
 }
 
-#[derive(Bundle, Default, LdtkEntity)]
+#[derive(Bundle, LdtkEntity)]
 pub struct BallBundle {
     ball: Ball,
+    name: Name,
+    collider: Collider,
     #[sprite_sheet_bundle]
     sprite_sheet_bundle: SpriteSheetBundle,
+}
+
+impl Default for BallBundle {
+    fn default() -> Self {
+        Self {
+            name: Name::new(Ball::ID),
+            ball: Ball,
+            collider: Collider::ball(8.0),
+            sprite_sheet_bundle: SpriteSheetBundle::default(),
+        }
+    }
 }
