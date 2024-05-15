@@ -14,6 +14,12 @@ impl EntityBlueprint for Ball {
     const NAME: &'static str = "Ball";
 
     fn components() -> impl Bundle {
-        Collider::ball(8.0)
+        (
+            Velocity::linear(Vec2::new(500.0, 500.0)),
+            Restitution::coefficient(2.0),
+            Collider::ball(8.0),
+            RigidBody::Dynamic,
+            GravityScale(0.0),
+        )
     }
 }
