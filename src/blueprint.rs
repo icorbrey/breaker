@@ -1,11 +1,13 @@
 use crate::prelude::*;
 
 pub trait BlueprintAppExt {
+    /// Registers an entity blueprint for entity imports from LDtk scenes.
     fn register_entity_blueprint<C>(&mut self) -> &mut Self
     where
         C: Component + Default + EntityBlueprint,
         EntityBlueprintBundle<C>: LdtkEntity + Bundle;
 
+    /// Registers a tile blueprint for int cell imports from LDtk scenes.
     fn register_tile_blueprint<C>(&mut self) -> &mut Self
     where
         C: Component + Default + TileBlueprint,
@@ -32,9 +34,11 @@ impl BlueprintAppExt for App {
     }
 }
 
+/// A trait for easily ingesting LDtk entities using the blueprint pattern.
 pub trait EntityBlueprint {
     const NAME: &'static str;
 
+    /// Hydrates newly added LDtk entities with any associated components.
     fn hydrate(mut commands: Commands, new_entities: Query<Entity, Added<Self>>)
     where
         Self: Component,
@@ -47,6 +51,7 @@ pub trait EntityBlueprint {
         }
     }
 
+    /// Returns the components associated with this blueprint.
     fn components() -> impl Bundle;
 }
 
@@ -60,10 +65,12 @@ where
     sprite_sheet_bundle: SpriteSheetBundle,
 }
 
+/// A trait for easily ingesting LDtk int cells using the blueprint pattern.
 pub trait TileBlueprint {
     const NAME: &'static str;
     const ID: i32;
 
+    /// Hydrates newly added LDtk int cells with any associated components.
     fn hydrate(mut commands: Commands, new_entities: Query<Entity, Added<Self>>)
     where
         Self: Component,
@@ -76,6 +83,7 @@ pub trait TileBlueprint {
         }
     }
 
+    /// Returns the components associated with this blueprint.
     fn components() -> impl Bundle;
 }
 

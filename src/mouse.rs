@@ -30,6 +30,7 @@ pub enum MouseAction {
     Move,
 }
 
+/// Allows us to drive MouseAction based on window events.
 fn register_window_listener(mut commands: Commands, window: Query<Entity, With<PrimaryWindow>>) {
     commands.entity(window.single()).insert(ActionStateDriver {
         action: MouseAction::Move,
@@ -37,6 +38,7 @@ fn register_window_listener(mut commands: Commands, window: Query<Entity, With<P
     });
 }
 
+/// Updates all targets with the current mouse position.
 fn update_cursor_state(
     windows: Query<(&Window, &ActionStateDriver<MouseAction>)>,
     mut action_states: Query<&mut ActionState<MouseAction>>,
@@ -57,6 +59,7 @@ fn update_cursor_state(
     }
 }
 
+/// Adds entities to the list of targets when spawned or given an action state component.
 fn fetch_action_states(
     mut windows: Query<&mut ActionStateDriver<MouseAction>, With<Window>>,
     entities: Query<Entity, Added<ActionState<MouseAction>>>,
@@ -66,6 +69,7 @@ fn fetch_action_states(
     }
 }
 
+/// Removes entities to the list of targets when despawned or no longer has action state component.
 fn remove_action_states(
     mut windows: Query<&mut ActionStateDriver<MouseAction>, With<Window>>,
     mut entities: RemovedComponents<ActionState<MouseAction>>,
