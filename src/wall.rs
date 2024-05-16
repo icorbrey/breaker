@@ -1,5 +1,7 @@
+//! Adds functionality for walls.
 use crate::prelude::*;
 
+/// A plugin responsible for setting up the Wall int cell and its associated functionality.
 pub struct WallPlugin;
 impl Plugin for WallPlugin {
     fn build(&self, app: &mut App) {
@@ -7,6 +9,7 @@ impl Plugin for WallPlugin {
     }
 }
 
+/// Marker type for the Wall int cell.
 #[derive(Component, Debug, Default)]
 pub struct Wall;
 

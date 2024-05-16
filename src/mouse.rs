@@ -1,3 +1,4 @@
+//! Adds functionality for mouse position tracking.
 use bevy::{input::InputSystem, window::PrimaryWindow};
 use leafwing_input_manager::{
     axislike::DualAxisData, plugin::InputManagerSystem, systems::run_if_enabled,
@@ -5,6 +6,8 @@ use leafwing_input_manager::{
 
 use crate::prelude::*;
 
+/// A plugin responsible for setting up mouse tracking for all components with
+/// [`ActionState<MouseAction>`].
 pub struct MousePlugin;
 impl Plugin for MousePlugin {
     fn build(&self, app: &mut App) {
@@ -25,12 +28,13 @@ impl Plugin for MousePlugin {
     }
 }
 
+/// Mouse-related actions.
 #[derive(Actionlike, Clone, Debug, Copy, PartialEq, Eq, Hash, Reflect)]
 pub enum MouseAction {
     Move,
 }
 
-/// Allows us to drive MouseAction based on window events.
+/// Injects a mouse action state driver into the window.
 fn register_window_listener(mut commands: Commands, window: Query<Entity, With<PrimaryWindow>>) {
     commands.entity(window.single()).insert(ActionStateDriver {
         action: MouseAction::Move,

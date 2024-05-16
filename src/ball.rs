@@ -1,5 +1,7 @@
+//! Adds functionality for balls.
 use crate::prelude::*;
 
+/// A plugin responsible for setting up the Ball entity and its associated functionality.
 pub struct BallPlugin;
 impl Plugin for BallPlugin {
     fn build(&self, app: &mut App) {
@@ -7,6 +9,7 @@ impl Plugin for BallPlugin {
     }
 }
 
+/// Marker type for the Ball entity.
 #[derive(Component, Debug, Default)]
 pub struct Ball;
 

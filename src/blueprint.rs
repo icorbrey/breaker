@@ -1,5 +1,7 @@
+//! Provides abstractions over LDtk types for the blueprint pattern.
 use crate::prelude::*;
 
+/// Includes methods for registering blueprints.
 pub trait BlueprintAppExt {
     /// Registers an entity blueprint for entity imports from LDtk scenes.
     fn register_entity_blueprint<C>(&mut self) -> &mut Self
@@ -34,7 +36,7 @@ impl BlueprintAppExt for App {
     }
 }
 
-/// A trait for easily ingesting LDtk entities using the blueprint pattern.
+/// Used to import LDtk entities into Bevy using the blueprint pattern.
 pub trait EntityBlueprint {
     const NAME: &'static str;
 
@@ -55,6 +57,7 @@ pub trait EntityBlueprint {
     fn components() -> impl Bundle;
 }
 
+/// The default bundle for entity blueprints.
 #[derive(Bundle, Default, LdtkEntity)]
 pub struct EntityBlueprintBundle<C>
 where
@@ -65,7 +68,7 @@ where
     sprite_sheet_bundle: SpriteSheetBundle,
 }
 
-/// A trait for easily ingesting LDtk int cells using the blueprint pattern.
+/// Used to import LDtk int cells into Bevy using the blueprint pattern.
 pub trait TileBlueprint {
     const NAME: &'static str;
     const ID: i32;
@@ -87,6 +90,7 @@ pub trait TileBlueprint {
     fn components() -> impl Bundle;
 }
 
+/// The default bundle for tile blueprints.
 #[derive(Bundle, Default, LdtkIntCell)]
 pub struct TileBlueprintBundle<C>
 where

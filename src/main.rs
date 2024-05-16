@@ -1,10 +1,10 @@
-mod ball;
-mod blueprint;
-mod brick;
-mod mouse;
-mod paddle;
-mod prelude;
-mod wall;
+pub mod ball;
+pub mod blueprint;
+pub mod brick;
+pub mod mouse;
+pub mod paddle;
+pub mod prelude;
+pub mod wall;
 
 use crate::prelude::{plugins::*, *};
 

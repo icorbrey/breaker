@@ -1,5 +1,7 @@
+//! Adds functionality for the paddle.
 use crate::prelude::*;
 
+/// A plugin responsible for setting up the Paddle entity and its associated functionality.
 pub struct PaddlePlugin;
 impl Plugin for PaddlePlugin {
     fn build(&self, app: &mut App) {
@@ -8,6 +10,7 @@ impl Plugin for PaddlePlugin {
     }
 }
 
+/// Marker type for the Paddle entity.
 #[derive(Component, Debug, Default)]
 pub struct Paddle;
 
@@ -23,6 +26,7 @@ impl EntityBlueprint for Paddle {
     }
 }
 
+/// Updates the paddle's position to cling to the mouse where possible.
 fn track_mouse_position(
     mut paddle: Query<(&mut Transform, &RigidBody, &ActionState<MouseAction>)>,
 ) {

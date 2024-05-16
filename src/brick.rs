@@ -1,5 +1,7 @@
+//! Adds functionality for bricks.
 use crate::prelude::*;
 
+/// A plugin responsible for setting up the Brick entity and its associated functionality.
 pub struct BrickPlugin;
 impl Plugin for BrickPlugin {
     fn build(&self, app: &mut App) {
@@ -7,6 +9,7 @@ impl Plugin for BrickPlugin {
     }
 }
 
+/// Marker type for the Brick component.
 #[derive(Component, Debug, Default)]
 pub struct Brick;
 
