@@ -1,6 +1,7 @@
 mod ball;
 mod blueprint;
 mod brick;
+mod mouse;
 mod paddle;
 mod prelude;
 mod wall;
@@ -16,7 +17,13 @@ fn main() {
             EditorPlugin::default(),
             LdtkPlugin,
         ))
-        .add_plugins((BallPlugin, BrickPlugin, PaddlePlugin, WallPlugin))
+        .add_plugins((
+            PaddlePlugin,
+            BrickPlugin,
+            MousePlugin,
+            BallPlugin,
+            WallPlugin,
+        ))
         .insert_resource(LevelSelection::index(0))
         .add_systems(Startup, setup)
         .run();
